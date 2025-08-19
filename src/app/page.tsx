@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 
 interface Machine {
-  type: string;
+  type: string; 
   check_status: 'oui' | 'non';
   val: number;
 }
@@ -47,26 +47,67 @@ export default function HomePage() {
   return (
     <div className="h-[calc(100vh-1rem)] bg-gray-50 pt-5 px-4">
       <div className="h-full flex flex-col gap-4">
-        {/* Top: DEA + DEL */}
-        <div className="flex h-1/2 gap-4 mt-13">
-          {/* DEA */}
-          <div className="w-1/2 bg-slate-800 rounded-md p-5 flex flex-col items-center justify-center">
-            <h1 className="text-4xl font-bold text-white mb-4">DEA</h1>
-            <div className={`${getColor('dea')} w-20 h-20 rounded`} />
-          </div>
+{/* Top: DEA + DEL */}
+<div className="flex h-1/2 gap-4 mt-13">
+  {/* DEA */}
+  <div className="w-1/2 bg-slate-800 rounded-md p-5 flex flex-col items-start justify-start">
+    <h1 className="text-4xl font-bold text-white mb-4">DEA</h1>
+    <div className="flex flex-row gap-4 mt-2">
+      <div className="flex flex-col items-center">
+        <div className={`${getColor('dea1')} w-20 h-20 rounded`} />
+        <span className="text-white mt-2">Machine 1</span>
+      </div>
+      <div className="flex flex-col items-center">
+        <div className={`${getColor('dea2')} w-20 h-20 rounded`} />
+        <span className="text-white mt-2">Machine 2</span>
+      </div>
+      <div className="flex flex-col items-center">
+        <div className={`${getColor('dea3')} w-20 h-20 rounded`} />
+        <span className="text-white mt-2">Machine 3</span>
+      </div>
+    </div>
+  </div>
 
-          {/* DEL */}
-          <div className="w-1/2 bg-slate-800 rounded-md p-5 flex flex-col items-center justify-center">
-            <h1 className="text-4xl font-bold text-white mb-4">DEL</h1>
-            <div className={`${getColor('del')} w-20 h-20 rounded`} />
-          </div>
-        </div>
+  {/* DEL */}
+  <div className="w-1/2 bg-slate-800 rounded-md p-5 flex flex-col items-start justify-start">
+    <h1 className="text-4xl font-bold text-white mb-4">DEL</h1>
+    <div className="flex flex-row gap-4 mt-2">
+      <div className="flex flex-col items-center">
+        <div className={`${getColor('del1')} w-20 h-20 rounded`} />
+        <span className="text-white mt-2">Machine 1</span>
+      </div>
+      <div className="flex flex-col items-center">
+        <div className={`${getColor('del2')} w-20 h-20 rounded`} />
+        <span className="text-white mt-2">Machine 2</span>
+      </div>
+      <div className="flex flex-col items-center">
+        <div className={`${getColor('del3')} w-20 h-20 rounded`} />
+        <span className="text-white mt-2">Machine 3</span>
+      </div>
+    </div>
+  </div>
+</div>
 
-        {/* Bottom: DTP */}
-        <div className="h-1/2 bg-slate-800 rounded-md p-5 flex flex-col items-center justify-center">
-          <h1 className="text-4xl font-bold text-white mb-4">DTP</h1>
-          <div className={`${getColor('dtp')} w-20 h-20 rounded`} />
-        </div>
+{/* Bottom: DTP */}
+<div className="h-1/2 bg-slate-800 rounded-md p-5 flex flex-col items-start justify-start">
+  <h1 className="text-4xl font-bold text-white mb-4">DTP</h1>
+  <div className="flex flex-row gap-4 mt-2">
+    <div className="flex flex-col items-center">
+      <div className={`${getColor('dtp1')} w-20 h-20 rounded`} />
+      <span className="text-white mt-2">Machine 1</span>
+    </div>
+    <div className="flex flex-col items-center">
+      <div className={`${getColor('dtp2')} w-20 h-20 rounded`} />
+      <span className="text-white mt-2">Machine 2</span>
+    </div>
+    <div className="flex flex-col items-center">
+      <div className={`${getColor('dtp3')} w-20 h-20 rounded`} />
+      <span className="text-white mt-2">Machine 3</span>
+    </div>
+  </div>
+</div>
+
+
       </div>
     </div>
   );
