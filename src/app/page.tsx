@@ -3,10 +3,10 @@
 import { useEffect, useState } from 'react';
 
 interface Machine {
-  type: string; 
-  check_status: 'oui' | 'non';
-  val: number;
+  machine_id: string;
+  val: string | null;
 }
+
 
 export default function HomePage() {
   const [machines, setMachines] = useState<Machine[]>([]);
@@ -17,7 +17,6 @@ export default function HomePage() {
         const res = await fetch('/api/machines');
         const data = await res.json();
 
-        // Ensure data is always an array
         if (Array.isArray(data)) {
           setMachines(data);
         } else {
@@ -30,83 +29,100 @@ export default function HomePage() {
       }
     };
 
-    fetchMachines(); // initial fetch
-    const interval = setInterval(fetchMachines, 5000); // poll every 5s
+    fetchMachines();
+    const interval = setInterval(fetchMachines, 5000);
     return () => clearInterval(interval);
   }, []);
 
-  const getColor = (type: string) => {
+  const getColor = (id: string) => {
     const machine = machines.find(
-      (m) => m.type.toLowerCase() === type.toLowerCase()
+      (m) => m.machine_id.toLowerCase().includes(id.toLowerCase())
     );
-    return machine?.check_status.toLowerCase() === 'oui'
-      ? 'bg-green-500'
-      : 'bg-red-500';
+    if (!machine) return 'bg-gray-400';
+
+    // if val === "-1" → red, else green
+    return machine.val === "-1" ? 'bg-red-500' : 'bg-green-500';
   };
 
   return (
     <div className="h-[calc(100vh-1rem)] bg-gray-50 pt-5 px-4">
       <div className="h-full flex flex-col gap-4">
-{/* Top: DEA + DEL */}
-<div className="flex h-1/2 gap-4 mt-13">
-  {/* DEA */}
-  <div className="w-1/2 bg-slate-800 rounded-md p-5 flex flex-col items-start justify-start">
-    <h1 className="text-4xl font-bold text-white mb-4">DEA</h1>
-    <div className="flex flex-row gap-4 mt-2">
-      <div className="flex flex-col items-center">
-        <div className={`${getColor('dea1')} w-20 h-20 rounded`} />
-        <span className="text-white mt-2">Machine 1</span>
-      </div>
-      <div className="flex flex-col items-center">
-        <div className={`${getColor('dea2')} w-20 h-20 rounded`} />
-        <span className="text-white mt-2">Machine 2</span>
-      </div>
-      <div className="flex flex-col items-center">
-        <div className={`${getColor('dea3')} w-20 h-20 rounded`} />
-        <span className="text-white mt-2">Machine 3</span>
-      </div>
-    </div>
-  </div>
 
-  {/* DEL */}
-  <div className="w-1/2 bg-slate-800 rounded-md p-5 flex flex-col items-start justify-start">
-    <h1 className="text-4xl font-bold text-white mb-4">DEL</h1>
-    <div className="flex flex-row gap-4 mt-2">
-      <div className="flex flex-col items-center">
-        <div className={`${getColor('del1')} w-20 h-20 rounded`} />
-        <span className="text-white mt-2">Machine 1</span>
-      </div>
-      <div className="flex flex-col items-center">
-        <div className={`${getColor('del2')} w-20 h-20 rounded`} />
-        <span className="text-white mt-2">Machine 2</span>
-      </div>
-      <div className="flex flex-col items-center">
-        <div className={`${getColor('del3')} w-20 h-20 rounded`} />
-        <span className="text-white mt-2">Machine 3</span>
-      </div>
-    </div>
-  </div>
-</div>
+        {/* Top: DEA + DEL */}
+        <div className="flex h-1/2 gap-4 mt-13">
+          {/* DEA */}
+          <div className="w-1/2 bg-slate-800 rounded-md p-5 flex flex-col items-start justify-start">
+            <h1 className="text-4xl font-bold text-white mb-4">DEA</h1>
+            <div className="flex flex-row gap-4 mt-2">
+              <div className="flex flex-col items-center">
+                <div className={`${getColor('Four 1 18MVA.I1')} w-20 h-20 rounded`} />
+                <span className="text-white mt-2">Four 1</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className={`${getColor('Four 2 18MVA.I1')} w-20 h-20 rounded`} />
+                <span className="text-white mt-2">Four 2</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className={`${getColor('Four Poche.I1')} w-20 h-20 rounded`} />
+                <span className="text-white mt-2">Four Poche</span>
+              </div>
+            </div>
+          </div>
 
-{/* Bottom: DTP */}
-<div className="h-1/2 bg-slate-800 rounded-md p-5 flex flex-col items-start justify-start">
-  <h1 className="text-4xl font-bold text-white mb-4">DTP</h1>
-  <div className="flex flex-row gap-4 mt-2">
-    <div className="flex flex-col items-center">
-      <div className={`${getColor('dtp1')} w-20 h-20 rounded`} />
-      <span className="text-white mt-2">Machine 1</span>
-    </div>
-    <div className="flex flex-col items-center">
-      <div className={`${getColor('dtp2')} w-20 h-20 rounded`} />
-      <span className="text-white mt-2">Machine 2</span>
-    </div>
-    <div className="flex flex-col items-center">
-      <div className={`${getColor('dtp3')} w-20 h-20 rounded`} />
-      <span className="text-white mt-2">Machine 3</span>
-    </div>
-  </div>
-</div>
+          {/* DEL */}
+          <div className="w-1/2 bg-slate-800 rounded-md p-5 flex flex-col items-start justify-start">
+            <h1 className="text-4xl font-bold text-white mb-4">DEL</h1>
+            <div className="flex flex-row gap-4 mt-2">
+              <div className="flex flex-col items-center">
+                <div className={`${getColor('TRA-2000KVA.I1')} w-20 h-20 rounded`} />
+                <span className="text-white mt-2">train barre</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className={`${getColor('2x450 kW Moteurs.I1')} w-20 h-20 rounded`} />
+                <span className="text-white mt-2">train fille</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
+        {/* Bottom: DTF */}
+        <div className="h-1/2 bg-slate-800 rounded-md p-5 flex flex-col items-start justify-start">
+          <h1 className="text-4xl font-bold text-white mb-4">DTF</h1>
+          <div className="flex flex-row gap-4 mt-2">
+            <div className="flex flex-col items-center">
+              <div className={`${getColor('Machine 3.I1')} w-20 h-20 rounded`} />
+              <span className="text-white mt-2">Machine 3</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className={`${getColor('Machine 4.I1')} w-20 h-20 rounded`} />
+              <span className="text-white mt-2">Machine 4</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className={`${getColor('Machine 12.I1')} w-20 h-20 rounded`} />
+              <span className="text-white mt-2">Machine 12</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className={`${getColor('Machine 19.I1')} w-20 h-20 rounded`} />
+              <span className="text-white mt-2">Machine 19</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className={`${getColor('Machine 20.I1')} w-20 h-20 rounded`} />
+              <span className="text-white mt-2">Machine 20</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className={`${getColor('Machine 21.I1')} w-20 h-20 rounded`} />
+              <span className="text-white mt-2">Machine 21</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className={`${getColor('Four Ripoche.I1')} w-20 h-20 rounded`} />
+              <span className="text-white mt-2">Four Ripoche 1</span>
+              </div>
+            <div className="flex flex-col items-center">
+              <div className={`${getColor('Four Bouvier.I1')} w-20 h-20 rounded`} />
+              <span className="text-white mt-2">Four Bouvier 1</span>
+            </div>
+          </div>
+        </div>
 
       </div>
     </div>

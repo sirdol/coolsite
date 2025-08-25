@@ -1,20 +1,17 @@
+// src/app/api/machines/route.ts
 import { NextResponse } from 'next/server';
-import { pool } from '@/lib/db';
 
 export const runtime = 'nodejs';
 
 export async function GET() {
   try {
-    const result = await pool.query('SELECT * FROM machines');
-    return new NextResponse(JSON.stringify(result.rows || []), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    // Replace this with your external JSON API endpoint
+    const res = await fetch('http://172.20.95.125:3001/getdata');
+    const data = await res.json();
+
+    return NextResponse.json(data);
   } catch (err: any) {
-    console.error('Database query error:', err.message);
-    return new NextResponse(JSON.stringify([]), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    console.error('API fetch error:', err.message);
+    return NextResponse.json([]);
   }
 }
